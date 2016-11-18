@@ -1,0 +1,19 @@
+{
+  "name": "learn-node",
+  "version": "1.0.0",
+  "description": "for nodejs learning practice",
+  "main": "program.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AsimoLoveGym/learn-node.git"
+  },
+  "author": "Joey Xia",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AsimoLoveGym/learn-node/issues"
+  },
+  "homepage": "https://github.com/AsimoLoveGym/learn-node#readme"
+}

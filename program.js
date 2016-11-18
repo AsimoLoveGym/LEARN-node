@@ -47,11 +47,38 @@
 
 // TASK 7
 
+// var http = require('http');
+//
+// http.get(process.argv[2],function(response){
+//   response.setEncoding("utf8");
+//   response.on("data",function(data){
+//     console.log(data);
+//   });
+// });
+
+// TASK 8
 var http = require('http');
+var bl = require('bl');
 
 http.get(process.argv[2],function(response){
+  // response.setEncoding("utf8");
+  // response.on("data",function(data){
+  //   console.log(data);
+  // });
+  var result = '';
+  response.pipe(bl(function (err, data) {
+    if(err) {
+      return console.error(err);
+    }
+    result += data;
+    // console.log(data.toString());
+  }));
+
   response.setEncoding("utf8");
-  response.on("data",function(data){
-    console.log(data);
+  response.on("end",function(data){
+    // console.log(data.toString().length);
+    // console.log(data);
+    console.log(result.length);
+    console.log(result);
   });
 });
