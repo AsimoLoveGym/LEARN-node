@@ -57,28 +57,61 @@
 // });
 
 // TASK 8
+// var http = require('http');
+// var bl = require('bl');
+//
+// http.get(process.argv[2],function(response){
+//   // response.setEncoding("utf8");
+//   // response.on("data",function(data){
+//   //   console.log(data);
+//   // });
+//   var result = '';
+//   response.pipe(bl(function (err, data) {
+//     if(err) {
+//       return console.error(err);
+//     }
+//     result += data;
+//     // console.log(data.toString());
+//   }));
+//   !!end在这里并不管用.
+//   response.setEncoding("utf8");
+//   response.on("end",function(data){
+//     // console.log(data.toString().length);
+//     // console.log(data);
+//     console.log(result.length);
+//     console.log(result);
+//   });
+// });
+
+// TASK 9
 var http = require('http');
 var bl = require('bl');
+var urlArray = [];
+var resultData = [];
+var count = 0;
+urlArray.push(process.argv[2],process.argv[3],process.argv[4]);
+// console.log(urlArray);
 
-http.get(process.argv[2],function(response){
-  // response.setEncoding("utf8");
-  // response.on("data",function(data){
-  //   console.log(data);
-  // });
-  var result = '';
-  response.pipe(bl(function (err, data) {
-    if(err) {
-      return console.error(err);
-    }
-    result += data;
-    // console.log(data.toString());
-  }));
+urlArray.forEach(function(element,index,array){
+  http.get(element,function(response){
+    var result = '';
+    response.pipe(bl(function (err, data) {
+      if(err) {
+        return console.error(err);
+      }
+      // result += data;
+      resultData[index] = data.toString();
+      count ++;
+      // console.log(data.toString());
+      if(count === 3){
+        printResultData(resultData);
+      }
+    }));
+  })
+})
 
-  response.setEncoding("utf8");
-  response.on("end",function(data){
-    // console.log(data.toString().length);
-    // console.log(data);
-    console.log(result.length);
-    console.log(result);
-  });
-});
+function printResultData(finalContent){
+  finalContent.forEach(function(element){
+    console.log(element);
+  })
+}
