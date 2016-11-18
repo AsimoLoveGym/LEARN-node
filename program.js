@@ -17,6 +17,7 @@
 // var strArray = str.split('\n');
 // console.log(strArray.length-1);
 
+// TASK 5
 
 // var fs = require('fs');
 // var strArray = [];
@@ -29,16 +30,28 @@
 //   console.log(strArray.length-1);
 // });
 
+// TASK 6
 // Credit to https://github.com/nodeschool/discussions/issues/1913
-var mymodule = require('./mymodule.js')
+// var mymodule = require('./mymodule.js')
+//
+// function callback(err,data){  //amazing
+//   if(err) {
+//     console.error(err); // should use .error instead of .log
+//   }
+//   data.forEach(function(element){
+//     console.log(element);
+//   })
+// }
+//
+// mymodule(process.argv[2],process.argv[3],callback);
 
-function callback(err,data){  //amazing
-  if(err) {
-    console.error(err); // should use .error instead of .log
-  }
-  data.forEach(function(element){
-    console.log(element);
-  })
-}
+// TASK 7
 
-mymodule(process.argv[2],process.argv[3],callback);
+var http = require('http');
+
+http.get(process.argv[2],function(response){
+  response.setEncoding("utf8");
+  response.on("data",function(data){
+    console.log(data);
+  });
+});
