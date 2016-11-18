@@ -1,21 +1,14 @@
 
 var fs = require('fs');
 
-
-fs.readdir(process.argv[2],function(err,list){
-  if(err){
-    return console.log(err)
-  }
-
-  var filteredFiles = list.filter(function(element,index,array){
-    return element.indexOf("." + process.argv[3]) > -1;
+module.exports = function (dir, ext, callback) {
+  fs.readdir(dir,function(err,list){
+    if(err){
+      return callback(err);
+    }
+    var data = list.filter(function(element,index,array){
+      return element.indexOf("." + ext) > -1;
+    })
+    return callback(null,data);
   })
-
-  filteredFiles.forEach(function(element){
-    console.log(element);
-  })
-
-  // console.log(filteredFiles);
-})
-
-module.exports = function (args) { /* ... */ }
+}

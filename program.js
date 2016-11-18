@@ -29,23 +29,16 @@
 //   console.log(strArray.length-1);
 // });
 
+// Credit to https://github.com/nodeschool/discussions/issues/1913
 var mymodule = require('./mymodule.js')
 
-mymodule(process.argv[2],process.argv[3],function(null,))
-
-fs.readdir(process.argv[2],function(err,list){
-
-  if(err){
-    return console.log(err)
+function callback(err,data){  //amazing
+  if(err) {
+    console.error(err); // should use .error instead of .log
   }
-
-  var filteredFiles = list.filter(function(element,index,array){
-    return element.indexOf("." + process.argv[3]) > -1;
-  })
-
-  filteredFiles.forEach(function(element){
+  data.forEach(function(element){
     console.log(element);
   })
+}
 
-  // console.log(filteredFiles);
-})
+mymodule(process.argv[2],process.argv[3],callback);
