@@ -117,14 +117,25 @@
 // }
 
 // TASK 10
-var net = require("net");
+// var net = require("net");
+// var port = process.argv[2];
+// var time = new Date();
+// var timeStr = '';
+// timeStr = time.getFullYear() + '-' + (time.getMonth()+1) + '-' + time.getDate() + ' ' + time.getHours() + ':' + time.getMinutes() + '\n';
+// console.log(timeStr);
+// var server = net.createServer(function(socket){
+//   socket.write(timeStr);
+//   socket.end('');
+// })
+// server.listen(port)
+
+// TASK 10
+var http = require("http");
+var fs = require('fs');
 var port = process.argv[2];
-var time = new Date();
-var timeStr = '';
-timeStr = time.getFullYear() + '-' + (time.getMonth()+1) + '-' + time.getDate() + ' ' + time.getHours() + ':' + time.getMinutes() + '\n';
-console.log(timeStr);
-var server = net.createServer(function(socket){
-  socket.write(timeStr);
-  socket.end('');
+var locationOfFile = process.argv[3];
+var server = http.createServer(function(req,res){
+  fs.createReadStream(locationOfFile).pipe(res);
 })
-server.listen(port)
+
+server.listen(port);
