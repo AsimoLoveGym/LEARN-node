@@ -129,13 +129,64 @@
 // })
 // server.listen(port)
 
-// TASK 10
-var http = require("http");
-var fs = require('fs');
-var port = process.argv[2];
-var locationOfFile = process.argv[3];
-var server = http.createServer(function(req,res){
-  fs.createReadStream(locationOfFile).pipe(res);
-})
+// TASK 11
+// var http = require("http");
+// var fs = require('fs');
+// var port = process.argv[2];
+// var locationOfFile = process.argv[3];
+// var server = http.createServer(function(req,res){
+//   fs.createReadStream(locationOfFile).pipe(res);
+// })
+//
+// server.listen(port);
 
+// TASK 12
+// Inspired By
+// http://stackoverflow.com/questions/12006417/node-js-server-that-accepts-post-requests
+// var http = require("http");
+// var map = require('through2-map');
+// var port = process.argv[2];
+//
+// var server = http.createServer(function(req,res){
+//   if(req.method !== "POST") {
+//     return res.end("Send via POST!")
+//   }
+//
+//   req.pipe(map(function(element){
+//     return element.toString().toUpperCase()
+//   })).pipe(res)
+// })
+//
+// server.listen(port);
+
+// TASK 13
+
+var http = require("http");
+var url = require("url");
+var port = process.argv[2];
+
+
+var server = http.createServer(function(req,res){
+  var path = url.parse(req.url, true);
+  // console.log(path.pathname);
+  // console.log(path);
+
+  if (path.pathname == '/api/parsetime') {
+    var date = new Date(Date.parse(path.query.iso));
+    var returnedJSON = {};
+    returnedJSON.hour = date.getHours();
+    returnedJSON.minute = date.getMinutes();
+    returnedJSON.second = date.getSeconds();
+
+    res.writeHead(200, {'Content-Type': 'application/json'})
+    res.end(JSON.stringify(returnedJSON));
+  } else if (path.pathname == '/api/unixtime') {
+    // var date = new Date(Date.parse(path.query.iso));
+    var returnedJSON = {};
+    returnedJSON = {"unixtime": Date.parse(path.query.iso)};
+    // console.log(returnedJSON);
+    res.writeHead(200, {'Content-Type': 'application/json'})
+    res.end(JSON.stringify(returnedJSON));
+  }
+})
 server.listen(port);
