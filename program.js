@@ -84,34 +84,47 @@
 // });
 
 // TASK 9
-var http = require('http');
-var bl = require('bl');
-var urlArray = [];
-var resultData = [];
-var count = 0;
-urlArray.push(process.argv[2],process.argv[3],process.argv[4]);
-// console.log(urlArray);
+// var http = require('http');
+// var bl = require('bl');
+// var urlArray = [];
+// var resultData = [];
+// var count = 0;
+// urlArray.push(process.argv[2],process.argv[3],process.argv[4]);
+// // console.log(urlArray);
+//
+// urlArray.forEach(function(element,index,array){
+//   http.get(element,function(response){
+//     var result = '';
+//     response.pipe(bl(function (err, data) {
+//       if(err) {
+//         return console.error(err);
+//       }
+//       // result += data;
+//       resultData[index] = data.toString();
+//       count ++;
+//       // console.log(data.toString());
+//       if(count === 3){
+//         printResultData(resultData);
+//       }
+//     }));
+//   })
+// })
+//
+// function printResultData(finalContent){
+//   finalContent.forEach(function(element){
+//     console.log(element);
+//   })
+// }
 
-urlArray.forEach(function(element,index,array){
-  http.get(element,function(response){
-    var result = '';
-    response.pipe(bl(function (err, data) {
-      if(err) {
-        return console.error(err);
-      }
-      // result += data;
-      resultData[index] = data.toString();
-      count ++;
-      // console.log(data.toString());
-      if(count === 3){
-        printResultData(resultData);
-      }
-    }));
-  })
+// TASK 10
+var net = require("net");
+var port = process.argv[2];
+var time = new Date();
+var timeStr = '';
+timeStr = time.getFullYear() + '-' + (time.getMonth()+1) + '-' + time.getDate() + ' ' + time.getHours() + ':' + time.getMinutes() + '\n';
+console.log(timeStr);
+var server = net.createServer(function(socket){
+  socket.write(timeStr);
+  socket.end('');
 })
-
-function printResultData(finalContent){
-  finalContent.forEach(function(element){
-    console.log(element);
-  })
-}
+server.listen(port)
